@@ -1,0 +1,2 @@
+-Focus solely on developing the frontend
+-Work on the backend later
