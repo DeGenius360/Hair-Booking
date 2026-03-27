@@ -1,32 +1,31 @@
--- Table for Services offered
-CREATE TABLE services (
-    service_id SERIAL PRIMARY KEY,
-    service_name VARCHAR(255) NOT NULL,
+-- SQLite-friendly schema for local development
+CREATE TABLE IF NOT EXISTS services (
+    service_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    service_name TEXT NOT NULL,
     service_duration INTEGER NOT NULL,
-    service_price DECIMAL(10, 2) NOT NULL
+    service_price REAL NOT NULL
 );
 
--- Table for Appointment Slots
-CREATE TABLE appointment_slots (
-    slot_id SERIAL PRIMARY KEY,
-    slot_datetime TIMESTAMP NOT NULL,
-    slot_available BOOLEAN NOT NULL
+CREATE TABLE IF NOT EXISTS appointment_slots (
+    slot_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    slot_datetime TEXT NOT NULL,
+    slot_available INTEGER NOT NULL
 );
 
--- Table for Appointments
-CREATE TABLE appointments (
-    appointment_id SERIAL PRIMARY KEY,
-    client_name VARCHAR(255) NOT NULL,
-    client_phone VARCHAR(20) NOT NULL,
-    appointment_time TIMESTAMP NOT NULL,
-    service_id INTEGER REFERENCES services (service_id),
-    slot_id INTEGER REFERENCES appointment_slots (slot_id),
-    confirmation_sent BOOLEAN DEFAULT false
+CREATE TABLE IF NOT EXISTS appointments (
+    appointment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    client_name TEXT NOT NULL,
+    client_phone TEXT NOT NULL,
+    appointment_time TEXT NOT NULL,
+    service_id INTEGER NOT NULL,
+    slot_id INTEGER NOT NULL,
+    confirmation_sent INTEGER DEFAULT 0,
+    FOREIGN KEY(service_id) REFERENCES services (service_id),
+    FOREIGN KEY(slot_id) REFERENCES appointment_slots (slot_id)
 );
 
--- Table for Users (for authentication)
-CREATE TABLE users (
-    user_id SERIAL PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL
+CREATE TABLE IF NOT EXISTS users (
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL
 );

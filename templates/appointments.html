@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card">
+    <h2>Upcoming appointments</h2>
+    {% if appointments %}
+      <div class="table">
+        <div class="table-row table-header">
+          <span>Client</span>
+          <span>Service</span>
+          <span>Time</span>
+          <span>Contact</span>
+        </div>
+        {% for appointment in appointments %}
+          <div class="table-row">
+            <span>{{ appointment.client_name }}</span>
+            <span>{{ appointment.service_name }} · ${{ "%.2f"|format(appointment.service_price) }}</span>
+            <span>{{ appointment.appointment_time | format_datetime }}</span>
+            <span>{{ appointment.client_phone }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">No appointments booked yet.</p>
+    {% endif %}
+  </section>
+{% endblock %}
