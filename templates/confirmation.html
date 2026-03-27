@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card">
+    <h2>Booking confirmed</h2>
+    <p>Thanks, {{ appointment.client_name }}! Your appointment is booked.</p>
+    <dl class="summary">
+      <div>
+        <dt>Service</dt>
+        <dd>{{ appointment.service_name }} · ${{ "%.2f"|format(appointment.service_price) }}</dd>
+      </div>
+      <div>
+        <dt>Duration</dt>
+        <dd>{{ appointment.service_duration }} minutes</dd>
+      </div>
+      <div>
+        <dt>Time</dt>
+        <dd>{{ appointment.appointment_time | format_datetime }}</dd>
+      </div>
+      <div>
+        <dt>Phone</dt>
+        <dd>{{ appointment.client_phone }}</dd>
+      </div>
+      <div>
+        <dt>Confirmation #</dt>
+        <dd>{{ appointment.appointment_id }}</dd>
+      </div>
+    </dl>
+    <div class="actions">
+      <a class="button-secondary" href="{{ url_for('index') }}">Book another</a>
+      <a class="button-primary" href="{{ url_for('appointments') }}">View appointments</a>
+    </div>
+  </section>
+{% endblock %}
